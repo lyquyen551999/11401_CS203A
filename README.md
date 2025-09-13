@@ -12,7 +12,6 @@
 
 ## Repository Description
 This repository is a living notebook for my Data Structures course.
-I will keep lecture notes, homework write-ups, and source code (C++/Python).
-Main topics: arrays, linked lists, stacks, queues, trees (BST/AVL/Heap), hash tables, graphs, Big-O.
+
 
 
