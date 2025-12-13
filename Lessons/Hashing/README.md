@@ -9,7 +9,7 @@
 
 This represents a **Key-Value Pair**.
 
-![Supermarket Bag Check Analogy](img_hash.jpg)
+![Supermarket Bag Check Analogy](img_hash.png)
 *Concept: Using a unique Key (Tag #05) to retrieve a Value (The Bag).*
 
 ---
