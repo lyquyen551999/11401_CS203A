@@ -43,5 +43,5 @@
 
 ---
 
-### 📝 TỔNG KẾT BÀI HỌC (THE BIG TAKEAWAY)
-> "Stack là cái hộp xếp chồng (**Vào sau ra trước**). Queue là cái ống xếp hàng (**Vào trước ra trước**). Nếu muốn tiết kiệm bộ nhớ và biết trước số lượng thì dùng **Mảng (Array)**. Nếu muốn linh hoạt, không giới hạn số lượng thì dùng **Danh sách liên kết (Linked List)**."
+### 📝 SUMMARY OF THE LESSON (THE BIG TAKEAWAY)
+> "A stack is a box that's stacked on top of each other (**Last In, First Out**). A queue is a tube that's arranged in a line (**First In, First Out**). If you want to save memory and know the number beforehand, use an **Array**. If you want flexibility and unlimited number, use a **Linked List**."
