@@ -62,7 +62,7 @@ $\rightarrow$ It turns into a long, straight line (just like a Linked List).
 
 When the tree gets skewed (leaning), they automatically "rotate" themselves to become round, short, and wide again. The shorter the tree, the faster the search (Time complexity: $O(\log n)$).
 
-![BST Rule and Balanced vs Skewed Tree](img_tree.jpg)
+![BST Rule and Balanced vs Skewed Tree](img_tree.png)
 *Illustration: The BST sorting rule (Left) and the difference between a slow Skewed Tree and a fast Balanced Tree (Right).*
 
 ---
