@@ -48,11 +48,6 @@ This is the "star" of the lesson. It is a Binary Tree but with a special sorting
 
 > **Purpose:** Helps search super fast (like a number guessing game where you eliminate half the possibilities after every guess).
 
-**Illustration of the BST rule:**
-If a central node is `50`:
-* Node `30` (smaller) goes to the **Left**.
-* Node `70` (larger) goes to the **Right**.
-
 ---
 
 ## 4. The Nightmare called "Imbalance" (Balancing)
@@ -66,6 +61,9 @@ $\rightarrow$ It turns into a long, straight line (just like a Linked List).
 * **Solution:** "Self-balancing" tree types like the **AVL Tree** or **Red-Black Tree**.
 
 When the tree gets skewed (leaning), they automatically "rotate" themselves to become round, short, and wide again. The shorter the tree, the faster the search (Time complexity: $O(\log n)$).
+
+![BST Rule and Balanced vs Skewed Tree](img_tree.jpg)
+*Illustration: The BST sorting rule (Left) and the difference between a slow Skewed Tree and a fast Balanced Tree (Right).*
 
 ---
 
