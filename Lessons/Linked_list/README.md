@@ -1,4 +1,4 @@
-# Lecture Summary: Data Structures - Linked Lists (Chapter 4)
+# Lecture Summary: Data Structures - Linked Lists 
 
 ## 1. Motivation: The Limitation of Arrays
 To understand why we use Linked Lists, we first look at the drawbacks of Arrays:
