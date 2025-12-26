@@ -1,4 +1,4 @@
-# Lecture Summary: Data Structures - Heaps (Chapter 5)
+# Lecture Summary: Data Structures - Heaps
 
 ## 1. Definition and Core Properties
 A **Heap** is a specialized data structure defined as a **complete binary tree** that satisfies the **heap-order property**.
