@@ -124,4 +124,4 @@ int hash_search(HashTable* table, int key) {
 | **Lookup** | $O(1)$ | $O(n)$ | Same as above. |
 | **Delete** | $O(1)$ | $O(n)$ | Same as above. |
 
-* **Load Factor ($\alpha$):** $\alpha = \frac{\text{Elements}}{\text{Capacity}}$.
+* **Load Factor ($\alpha$):**  `$\alpha = \frac{\text{Elements}}{\text{Capacity}}$`.
