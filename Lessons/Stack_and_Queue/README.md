@@ -124,7 +124,9 @@ Both structures are designed for speed.
 ## 5. Advanced Variations (The "Flavors")
 
 **Deque (Double-Ended Queue):** The rule breaker. You can Push/Pop from both front and back. (Used in Sliding Window algorithms).
+
 **Priority Queue:** Not strictly FIFO. The VIP (Highest Priority) gets dequeued first, regardless of arrival time. (Implemented via Heaps - Spoiler for future modules).
+
 **Monotonic Stack:** Keeps elements sorted inside the stack. Extremely useful for "Next Greater Element" problems.
 
 ---
