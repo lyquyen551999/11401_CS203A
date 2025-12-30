@@ -114,7 +114,7 @@ My Takeaway: realloc is expensive! It might involve finding a new memory block a
 ### 4.2. Pros & Cons
 
 | The Good (Pros) | The Bad (Cons) | 
-| :--- | :--- | :--- |
+| :--- | :--- | 
 | **✅ Blazing Fast Reads:**"Instant access to any index." | **❌ Fixed Size (Static):**"Can't handle unexpected extra data." | 
 | **✅ Cache Friendly:**"Elements are neighbors, CPU loves this linear access." | **❌ Slow Writes (Middle):**"nsertion/Deletion is heavy ($O(n)$)." | 
 | **✅ Memory Efficient:**"No overhead per element (unlike Linked Lists)." | **❌ Memory Waste:**"If you allocate 1000 slots but use 10." | 
