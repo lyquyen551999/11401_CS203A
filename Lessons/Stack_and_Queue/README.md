@@ -1,47 +1,68 @@
-# Stack & Queue: The Rules of Order 📚
+# Module 04: Stack & Queue - The Disciplined Lists
 
-## 1. Stack - The LIFO Rule 🥞
-> **Analogy:** Imagine a stack of pancakes or plates.
+## 1. Introduction: Law and Order
+Unlike Arrays and Linked Lists which act like "free-for-all" storage, **Stacks** and **Queues** are strict disciplinarians. They enforce specific rules on how data enters and leaves.
 
-* **Rule:** **LIFO** (Last In, First Out). The item you put in **Last** sits on top, so it must be taken out **First**.
-* **Operations:**
-    * `Push`: Add an item to the top.
-    * `Pop`: Remove the item from the top.
-* **Use Cases:** The "Undo" button in Word, function calls in programming (recursion).
-
-![Stack of Pancakes - LIFO](img_stack.jpg)
-*Visual: The last pancake placed on top is the first one eaten.*
+| Feature | 🥞 Stack | 🎫 Queue |
+| :--- | :--- | :--- |
+| **Rule** | **LIFO** (Last In, First Out) | **FIFO** (First In, First Out) |
+| **Analogy** | A tube of Pringles chips. | A line at a Bubble Tea shop. |
+| **Action** | Insert Top, Remove Top. | Insert Rear, Remove Front. |
+| **Real World** | Undo button (Ctrl+Z), Browser Back button. | Printer jobs, CPU task scheduling. |
 
 ---
 
-## 2. Queue - The FIFO Rule 🚶‍♂️🚶‍♀️
-> **Analogy:** Imagine a line of people at a checkout counter.
+## 2. Visualization & Operations
 
-* **Rule:** **FIFO** (First In, First Out). The person who arrives **First** gets served **First**.
-* **Operations:**
-    * `Enqueue`: Add an item to the **Rear** (back).
-    * `Dequeue`: Remove an item from the **Front**.
-* **Use Cases:** Printer jobs (first document sent prints first), handling web server requests.
+### 2.1. Stack ( The "Vertical" View)
+Input and Output happen at the **same end** (Top).
 
-![Queue at Supermarket - FIFO](img_queue.jpg)
-*Visual: The first person in line gets served first.*
 
----
+* **Push:** Add to Top.
+* **Pop:** Remove from Top.
+* **Peek:** Look at Top (don't remove).
 
-## 3. How to build them? (Comparison) 🏗️
+### 2.2. Queue (The "Horizontal" View)
+Input and Output happen at **opposite ends**.
 
-### A. Using an Array (The Box) 📦
-* **Concept:** Use a fixed block of memory.
-* **Queue Trick:** Uses **Circular Logic**. When you reach the end of the array, you wrap around to the beginning to reuse empty spots.
-* **Pros:** Fast access.
-* **Cons:** Can get full (**Overflow**).
 
-### B. Using a Linked List (The Chain) 🔗
-* **Concept:** Dynamic nodes connected by pointers.
-* **Pros:** Can grow as big as needed (**Dynamic memory**).
-* **Cons:** Need extra memory for the pointers.
+* **Enqueue:** Add to Rear.
+* **Dequeue:** Remove from Front.
 
 ---
 
-### 📝 SUMMARY OF THE LESSON (THE BIG TAKEAWAY)
-> "A stack is a box that's stacked on top of each other (**Last In, First Out**). A queue is a tube that's arranged in a line (**First In, First Out**). If you want to save memory and know the number beforehand, use an **Array**. If you want flexibility and unlimited number, use a **Linked List**."
+## 3. Implementation Strategies
+How do we build these using what we already know (Arrays/Linked Lists)?
+
+### 3.1. Stack Implementation (Array-based)
+Using an Array is the fastest way. We just track the `top` index.
+
+```c
+#include <stdio.h>
+#define MAX 100
+
+typedef struct {
+    int data[MAX];
+    int top;
+} Stack;
+
+void init_stack(Stack* s) {
+    s->top = -1; // Empty state
+}
+
+void push(Stack* s, int value) {
+    if (s->top == MAX - 1) return; // Overflow check
+    s->data[++(s->top)] = value;   // Increment then store
+}
+
+int pop(Stack* s) {
+    if (s->top == -1) return -1;   // Underflow check
+    return s->data[(s->top)--];    // Return then decrement
+}
+```
+### 3.2. Queue Implementation (The "Circular" Trick)
+
+**The Problem:** If we use a normal array, removing items from the front leaves empty, unusable space at the start. 
+**The Solution:** Circular Buffer (Ring Buffer). When we reach the end of the array, we loop back to index 0.
+
+**Key Formula:** next_index = (current_index + 1) % CAPACITY
