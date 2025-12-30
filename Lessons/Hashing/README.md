@@ -135,3 +135,32 @@ We solved this in Module 02 with $O(n^2)$. Now, with a Hash Table, we crush it i
 **Logic:** For every number `x`, we check: "Have I seen `target - x` before?"
 * If **Yes:** Solution found!
 * If **No:** Add `x` to the Hash Table and continue.
+
+```c
+// Pseudo-code logic for clarity (Assuming we use the HashTable above)
+void solve_two_sum_optimized(int* nums, int size, int target) {
+    HashTable* map = create_table(size * 2); // Double size to reduce collisions
+    
+    for (int i = 0; i < size; i++) {
+        int complement = target - nums[i];
+        
+        int found_index = hash_search(map, complement);
+        if (found_index != -1) {
+            printf("Solution: Indices %d and %d\n", found_index, i);
+            return;
+        }
+        
+        hash_insert(map, nums[i], i); // Store Value -> Index
+    }
+    printf("No solution found.\n");
+}
+```
+
+* **Time Complexity:** $O(n)$ - We walk through the list once. Lookup is $O(1)$.
+* **Space Complexity:** $O(n)$ - We store elements in the table.
+
+---
+
+**References**
+* **Course Material:** Lecture notes on Data Structures.
+* **AI Assistance:** Content synthesized and structured with the help of Gemini AI.
