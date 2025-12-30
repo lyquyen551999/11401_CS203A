@@ -105,10 +105,19 @@ My Takeaway: realloc is expensive! It might involve finding a new memory block a
 
 | Operation | Complexity | Why? |
 | :--- | :--- | :--- |
-| **Access/Read** | $O(1)$ (Instant) | "Simple math: Base_Addr + (Index * Size)" |
-| **Search (Unsorted)** | $O(n)$ (Slow - Shifting required) | "Must check every element one by one." |
-| **Search (Sorted)** | $O(\log n)$ (Slow - Shifting required) | "Can use Binary Search." |
-| **Insert/Delete (End)** | $O(1)$ (Instant) | "No shifting needed (if space exists)." |
-| **Insert/Delete (Middle)** | $O(n)$ (Instant) | "Requires shifting elements to close/open gaps." |
+| **Access/Read** | $O(1)$ | "Simple math: Base_Addr + (Index * Size)" |
+| **Search (Unsorted)** | $O(n)$ | "Must check every element one by one." |
+| **Search (Sorted)** | $O(\log n)$ | "Can use **Binary Search**." |
+| **Insert/Delete (End)** | $O(1)$ | "No shifting needed (if space exists)." |
+| **Insert/Delete (Middle)** | $O(n)$ | "Requires shifting elements to close/open gaps." |
+
+### 4.2. Pros & Cons
+
+| The Good (Pros) | The Bad (Cons) | 
+| :--- | :--- | :--- |
+| **✅ Blazing Fast Reads:**"Instant access to any index." | **❌ Fixed Size (Static):**"Can't handle unexpected extra data." | 
+| **✅ Cache Friendly:**"Elements are neighbors, CPU loves this linear access." | **❌ Slow Writes (Middle):**"nsertion/Deletion is heavy ($O(n)$)." | 
+| **✅ Memory Efficient:**"No overhead per element (unlike Linked Lists)." | **❌ Memory Waste:**"If you allocate 1000 slots but use 10." | 
+
 
 
