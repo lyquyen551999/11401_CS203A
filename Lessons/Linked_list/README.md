@@ -23,7 +23,10 @@ struct Node {
     int data;           // The value we want to store
     struct Node* next;  // The "clue" pointing to the next node
 };
-
+```
 ---
 
 ## 3. Linked List ADT & Operations
+
+The "Contract" of behaviors remains similar to other lists, but the performance characteristics change drastically.
+
