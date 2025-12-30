@@ -95,3 +95,20 @@ int main() {
     return 0;
 }
 ```
+My Takeaway: realloc is expensive! It might involve finding a new memory block and copying all old data over. Avoid calling it too often (e.g., inside a loop).
+
+---
+
+## 4. Performance Analysis
+
+### 4.1. Complexity Cheat Sheet
+
+| Operation | Complexity | Why? |
+| :--- | :--- | :--- |
+| **Access/Read** | $O(1)$ (Instant) | "Simple math: Base_Addr + (Index * Size)" |
+| **Search (Unsorted)** | $O(n)$ (Slow - Shifting required) | "Must check every element one by one." |
+| **Search (Sorted)** | $O(\log n)$ (Slow - Shifting required) | "Can use Binary Search." |
+| **Insert/Delete (End)** | $O(1)$ (Instant) | "No shifting needed (if space exists)." |
+| **Insert/Delete (Middle)** | $O(n)$ (Instant) | "Requires shifting elements to close/open gaps." |
+
+
