@@ -126,3 +126,12 @@ int hash_search(HashTable* table, int key) {
 
 * **Load Factor ($\alpha$):**  $\alpha = \frac{\text{Elements}}{\text{Capacity}}$.
 * **Rule of Thumb:** Keep $\alpha < 0.7$. If the table gets 70% full, resize it (double the size) to keep operations fast.
+
+---
+
+## 5. The "Killer" Application: Two Sum (Optimized)
+We solved this in Module 02 with $O(n^2)$. Now, with a Hash Table, we crush it in $O(n)$.
+
+**Logic:** For every number `x`, we check: "Have I seen `target - x` before?"
+* If **Yes:** Solution found!
+* If **No:** Add `x` to the Hash Table and continue.
