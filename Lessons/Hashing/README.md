@@ -125,3 +125,4 @@ int hash_search(HashTable* table, int key) {
 | **Delete** | $O(1)$ | $O(n)$ | Same as above. |
 
 * **Load Factor ($\alpha$):**  $\alpha = \frac{\text{Elements}}{\text{Capacity}}$.
+* **Rule of Thumb:** Keep $\alpha < 0.7$. If the table gets 70% full, resize it (double the size) to keep operations fast.
