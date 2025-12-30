@@ -30,3 +30,11 @@ struct Node {
 
 The "Contract" of behaviors remains similar to other lists, but the performance characteristics change drastically.
 
+| Operation | Description | The "Catch" |
+| :--- | :--- | :--- |
+| **Insert (Head)** | "Add new node at the start" | "Super Fast $O(1)$. Just update one pointer." |
+| **Insert (Tail)** | "Add new node at the end" | "Slow $O(n)$ unless you keep a tail pointer." |
+| **Delete (Node)** | "Remove a specific node" | "Fast $O(1)$ if you already stand at the previous node." |
+| **Search/Access** | "Find a value or index" | "Slow $O(n)$. No random access allowed!"|
+
+
