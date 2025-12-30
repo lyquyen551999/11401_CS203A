@@ -1,67 +1,127 @@
-# Dictionary, Hashing & Collisions 🔑
+# Module 05: Hash Table - The Magic Map
 
-## 1. Dictionary & Key-Value
-> **Analogy:** Imagine checking your bag at a supermarket. 🛍️
+## 1. The Concept: Valet Parking
+Imagine a massive parking lot.
+* **Array approach:** You drive around looking for an empty spot ($O(n)$).
+* **Hash Table approach:** You give your car key to a valet. The valet looks at your license plate, runs a quick calculation, and knows *exactly* which slot (e.g., Slot #42) your car belongs to. No searching required.
 
-1.  You give your bag (**Value**).
-2.  You get a number tag, e.g., `#05` (**Key**).
-3.  To get your bag back, you just show tag `#05`.
-
-This represents a **Key-Value Pair**.
-
-![Supermarket Bag Check Analogy](img_hash.png)
-*Concept: Using a unique Key (Tag #05) to retrieve a Value (The Bag).*
+> **The Core Idea:** We want the speed of an Array ($O(1)$) but the flexibility to use *any* data type as the index (String, Negative number, Object), not just integers $0 \dots N$.
 
 ---
 
-## 2. Hashing - The Magic Guard 🧙‍♂️
-How does a computer know where to put "Alice's" data in a numbered list (Array)?
-It uses a **Hash Function**.
+## 2. The Components
 
-* **Input:** "Alice"
-* **Magic Formula:** Does some math (like modulo `%`).
-* **Output:** Box `#3`.
+### 2.1. The Hash Function (The "Translator")
+This is the magic spell. It takes a **Key** (e.g., "Alice") and turns it into an **Integer Index** (e.g., `3`).
 
-$\rightarrow$ Alice's data goes into **Box #3**.
+$$Index = Hash(Key) \ \% \ TableSize$$
 
-> **Goal:** Super fast retrieval ($O(1)$). No searching, just calculating.
+* **Goal:** Spread keys evenly across the array to avoid piling up.
+* **Rule:** Same Input must always equal Same Output (Determinism).
 
----
+### 2.2. Collision Handling (The "Traffic Jam")
+What happens if "Alice" and "Bob" both hash to index `3`? This is a **Collision**. Two main ways to fix it:
 
-## 3. Collision - Traffic Jam! 💥
-What if "Alex" comes in, and the formula also calculates **Box #3**?
-* Box #3 is already occupied by Alice!
-* **This is a Collision:** Different keys mapping to the same index.
+| Strategy | Analogy | Pros | Cons |
+| :--- | :--- | :--- | :--- |
+| **Separate Chaining** | **Bunk Beds:** If slot 3 is taken, stack "Bob" on top of "Alice" (Linked List). | Simple deletion. Tolerates high load. | Pointers waste memory. Cache unfriendly. |
+| **Open Addressing** | **Next Seat:** If slot 3 is taken, "Bob" looks for slot 4, then 5... (Linear Probing). | No pointers. Fast Cache access. | Deletion is tricky (needs "Tombstones"). Slower if full. |
 
----
 
-## 4. Solving Collisions - The Strategies 🛠️
-
-### A. Strategy 1: Chaining (The Bunk Bed)
-If Box #3 is full, just hang Alex's bag *under* Alice's bag.
-* **Method:** Make a chain (**Linked List**) at that slot.
-* **Con:** Looking up items in a long chain is slow.
-
-### B. Strategy 2: Open Addressing (Find an Empty Spot)
-If Box #3 is full, Alex must find another empty box in the array. How?
-
-#### 1. Linear Probing (Walking) 🚶
-* Box 3 full? Try Box 4.
-* Box 4 full? Try Box 5.
-* **Problem:** **Primary Clustering**. It creates a "crowded neighborhood." If a block is full, newcomers make it even fuller and longer.
-
-#### 2. Quadratic Probing (Leaping) 🐇
-* Box 3 full? Jump 1 step ($1^2$).
-* Still full? Jump 4 steps ($2^2$).
-* Still full? Jump 9 steps ($3^2$).
-* **Result:** Spreads data out better than walking.
-
-#### 3. Double Hashing (The Smartest Jump) 🧠
-* **Method:** Use a *second* math formula to decide the jump size.
-* **Example:** Alice might jump 1 step if blocked, but Alex might jump 5 steps if blocked.
-* **Result:** Best distribution, minimizes clustering.
 
 ---
 
-### 📝 SUMMARY (RECAP)
-> "Hash tables are the fastest way to find data (like looking up words in a dictionary). But the key to success lies in handling 'collision' (**two people wanting to enter the same house**). The best way is to use double hashing or chaining."
+## 3. Implementation: Open Addressing (Linear Probing)
+Since C doesn't have built-in Maps (like Python's `dict`), we build one! Here is a clean implementation using **Linear Probing**.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Status flags to handle deletion and empty slots
+#define EMPTY 0
+#define OCCUPIED 1
+
+typedef struct {
+    int key;
+    int value;
+    int status; // Used to track if slot is taken
+} HashItem;
+
+typedef struct {
+    HashItem* items;
+    int size;
+    int capacity;
+} HashTable;
+
+// 1. Create the table
+HashTable* create_table(int capacity) {
+    HashTable* table = (HashTable*) malloc(sizeof(HashTable));
+    table->capacity = capacity;
+    table->size = 0;
+    // Calloc initializes everything to 0 (EMPTY)
+    table->items = (HashItem*) calloc(capacity, sizeof(HashItem)); 
+    return table;
+}
+
+// 2. Simple Hash Function
+unsigned int hash_function(int key, int capacity) {
+    // Multiply by a prime to scramble bits, then modulo
+    return (unsigned int)(key * 2654435761u) % capacity;
+}
+
+// 3. Insert (Put)
+void hash_insert(HashTable* table, int key, int value) {
+    if (table->size >= table->capacity) return; // Table full!
+
+    unsigned int index = hash_function(key, table->capacity);
+
+    // Linear Probing: If occupied, move to next slot
+    while (table->items[index].status == OCCUPIED) {
+        // Update existing key if found
+        if (table->items[index].key == key) {
+            table->items[index].value = value;
+            return;
+        }
+        index = (index + 1) % table->capacity; // Wrap around
+    }
+
+    // Found empty spot
+    table->items[index].key = key;
+    table->items[index].value = value;
+    table->items[index].status = OCCUPIED;
+    table->size++;
+}
+
+// 4. Search (Get)
+int hash_search(HashTable* table, int key) {
+    unsigned int index = hash_function(key, table->capacity);
+    int start_index = index;
+
+    while (table->items[index].status != EMPTY) {
+        if (table->items[index].key == key && table->items[index].status == OCCUPIED) {
+            return table->items[index].value; // Found!
+        }
+        index = (index + 1) % table->capacity;
+        
+        // Loop protection: if we circled back to start
+        if (index == start_index) break; 
+    }
+    return -1; // Not found
+}
+```
+
+**My Take:** Notice the `while` loop in `insert` and `search`. That's the "Probing" part. If the ideal spot is taken, we just keep walking down the street until we find space.
+
+---
+
+## 4. Complexity Analysis
+
+| Operation | Average Case | Worst Case | Why Worst Case? |
+| :--- | :--- | :--- | :--- |
+| **Insert** | $O(1)$ | $O(n)$ | Collision storm (everyone hashes to same index). |
+| **Lookup** | $O(1)$ | $O(n)$ | Same as above. |
+| **Delete** | $O(1)$ | $O(n)$ | Same as above. |
+
+* **Load Factor ($\alpha$):** $\alpha = \frac{\text{Elements}}{\text{Capacity}}$.
