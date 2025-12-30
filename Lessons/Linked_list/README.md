@@ -95,4 +95,46 @@ int main() {
 ```
 **Critical Rule:** Never lose the head pointer. If you lose head, you lose the entire list (Memory Leak).
 
+---
+
+## 5. Performance: Array vs Linked List
+The ultimate showdown. When should you use which?
+
+### 5.1. Complexity Comparison
+
+| Action | Array | Linked List | Winner |
+| :--- | :--- | :--- | :--- |
+| **Access**[i] | $O(1)$ | $O(n)$ | "🏆 Array" |
+| **Insert at Start** | $O(n)$ (Shift all) | $O(1)$ | "🏆 Linked List" |
+| **Insert at End** | $O(1)$ (Usually) | $O(n)$ (Without tail ptr) | "🤝 Tie" |
+| **Memory Usage** | "Fixed / Pre-allocated" | "Dynamic / Per-node"| "🏆 Linked List (Flexibility)"|
+
+### 5.2. Pros & Cons (The Trade-offs)
+
+**Linked List is great because:**
+* **✅ True Dynamic Size:** It eats exactly as much RAM as it needs. No pre-allocation guess work.
+* **✅ Easy Manipulation:** Cutting and pasting nodes (re-linking) is instant if you have the pointers. No shifting thousands of elements like Arrays.
+
+**But it suffers from:**
+* **❌ No Random Access:** You want the 500th element? You must visit the 499 before it.
+* **❌ Memory Overhead:** Every integer needs an extra pointer (4 or 8 bytes).
+* **❌ Cache Unfriendly:** CPU loves contiguous data (Arrays). Linked List nodes are scattered, causing "Cache Misses
+
+---
+
+## 6. Flavors of Linked Lists
+
+It's not just a single line. There are variations for different needs:
+****1. Singly Linked List:**** One-way street. Good for simple stacks/queues.
+****2. Doubly Linked List:**** Two-way street (Has prev and next).
+* Use case: Browser History (Back/Forward buttons), Music Player (Next/Prev song).
+* Cost: More memory for the extra pointer.
+****3. Circular Linked List:**** The End connects to the Start.
+* Use case: Round-robin scheduling (CPU checks process A -> B -> C -> A...), Repeat playlist.
+
+---
+
+**References**
+* **Course Material:** Lecture notes on Data Structures (Module: Linked List).
+* **AI Assistance:** Content synthesized and structured with the help of Gemini AI.
 
