@@ -125,11 +125,11 @@ The ultimate showdown. When should you use which?
 ## 6. Flavors of Linked Lists
 
 It's not just a single line. There are variations for different needs:
-****1. Singly Linked List:**** One-way street. Good for simple stacks/queues.
-****2. Doubly Linked List:**** Two-way street (Has prev and next).
+**1. Singly Linked List:** One-way street. Good for simple stacks/queues.
+**2. Doubly Linked List:** Two-way street (Has prev and next).
 * Use case: Browser History (Back/Forward buttons), Music Player (Next/Prev song).
 * Cost: More memory for the extra pointer.
-****3. Circular Linked List:**** The End connects to the Start.
+**3. Circular Linked List:** The End connects to the Start.
 * Use case: Round-robin scheduling (CPU checks process A -> B -> C -> A...), Repeat playlist.
 
 ---
