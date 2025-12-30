@@ -66,3 +66,77 @@ int pop(Stack* s) {
 **The Solution:** Circular Buffer (Ring Buffer). When we reach the end of the array, we loop back to index 0.
 
 **Key Formula:** `next_index = (current_index + 1) % CAPACITY`
+
+```c
+#include <stdio.h>
+#define MAX 5
+
+typedef struct {
+    int data[MAX];
+    int front;
+    int rear;
+    int count; // Helpful to track size easily
+} CircularQueue;
+
+void init_queue(CircularQueue* q) {
+    q->front = 0;
+    q->rear = -1;
+    q->count = 0;
+}
+
+void enqueue(CircularQueue* q, int value) {
+    if (q->count == MAX) return; // Full
+    
+    // Wrap around to 0 if we hit the limit
+    q->rear = (q->rear + 1) % MAX; 
+    q->data[q->rear] = value;
+    q->count++;
+}
+
+int dequeue(CircularQueue* q) {
+    if (q->count == 0) return -1; // Empty
+    
+    int value = q->data[q->front];
+    // Wrap around to 0 if we hit the limit
+    q->front = (q->front + 1) % MAX;
+    q->count--;
+    return value;
+}
+```
+
+---
+
+## 4. Complexity Analysis
+Both structures are designed for speed.
+
+| Operation | Time Complexity | Why? |
+| :--- | :--- | :--- |
+| **Push / Enqueue** | $O(1)$ | "Direct index access or pointer update." |
+| **Pop / Dequeue** | $O(1)$ | "Direct index access or pointer update." |
+| **Peek** | $O(1)$ | "No traversal needed." |
+| **Search** | $O(n)$ | "(Not their strong suit!) You must empty them to find items." |
+
+**Note on Space:** > * **Array-based:** Fixed size ($O(C)$). Can waste space or overflow.
+* **Linked-List-based:** Dynamic size ($O(n)$). Extra memory for pointers.
+
+---
+
+## 5. Advanced Variations (The "Flavors")
+
+**Deque (Double-Ended Queue):** The rule breaker. You can Push/Pop from both front and back. (Used in Sliding Window algorithms).
+**Priority Queue:** Not strictly FIFO. The VIP (Highest Priority) gets dequeued first, regardless of arrival time. (Implemented via Heaps - Spoiler for future modules).
+**Monotonic Stack:** Keeps elements sorted inside the stack. Extremely useful for "Next Greater Element" problems.
+
+---
+
+## 6. My Takeaway
+
+* **Stack** is for Backtracking. If you need to reverse your steps (like solving a maze or evaluating math expressions `3 + 4 * 5`), use a Stack.
+* **Queue** is for Buffering. If data arrives faster than you can process it (like keyboard strokes or web server requests), put it in a Queue.
+* **Never** use a simple array for a Queue (shifting elements is $O(n)$). Always use a **Circular Array** or **Linked List.**
+
+---
+
+**References**
+* **Course Material:** Lecture notes on Data Structures.
+* **AI Assistance:** Content synthesized and structured with the help of Gemini AI.
