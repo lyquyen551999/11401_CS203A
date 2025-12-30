@@ -65,4 +65,4 @@ int pop(Stack* s) {
 **The Problem:** If we use a normal array, removing items from the front leaves empty, unusable space at the start. 
 **The Solution:** Circular Buffer (Ring Buffer). When we reach the end of the array, we loop back to index 0.
 
-**Key Formula:** next_index = (current_index + 1) % CAPACITY
+**Key Formula:** `next_index = (current_index + 1) % CAPACITY`
