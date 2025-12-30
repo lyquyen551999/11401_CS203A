@@ -152,7 +152,7 @@ Deciding between an Array and a Linked List isn't just about Big-O notation; it'
 | **Cache Friendliness** | ⭐ **High** (Spatial Locality) | 🔻 **Low** (Cache Misses) |
 | **Resize** | Costly (Realloc + Copy) | Seamless (Alloc node by node) |
 
-*> Note: Insertion in Linked List is $O(1)$ only if you already have the pointer to the position. Finding that position still takes $O(n)$.*
+*> Note: Insertion in Linked List is O(1) only if you already have the pointer to the position. Finding that position still takes O(n).*
 
 ### 7.2. When to choose what? (Battle Strategy)
 
