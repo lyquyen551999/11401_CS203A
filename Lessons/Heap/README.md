@@ -147,3 +147,19 @@ int extract_max(MaxHeap* h) {
 **My Take:** Don't confuse Heap with BST.
 * BST is for **Searching** ($Left < Root < Right$).
 * Heap is for **Priority** ($Parent > Children$). Left/Right relationship doesn't matter in Heap.
+
+---
+
+## 6. Applications & Variations
+
+* **Heap Sort:** An in-place sorting algorithm ($O(n \log n)$). It basically builds a heap and calls `Extract-Max` repeatedly.
+* **Priority Queues:** Used in Dijkstra's Algorithm (Shortest Path) and OS Task Scheduling.
+* **Variations:**
+  * **Min-Heap:** Keeps smallest item at top.
+  * **Fibonacci Heap:** Advanced version, theoretically faster for some graph algorithms.
+ 
+---
+
+**References**
+* **Course Material:** Lecture notes on Data Structures.
+* **AI Assistance:** Content synthesized and structured with the help of Gemini AI.
