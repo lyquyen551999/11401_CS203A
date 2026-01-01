@@ -136,4 +136,14 @@ int extract_max(MaxHeap* h) {
 
 ## 5. Performance Analysis
 
+| Operation | Time Complexity | Why? |
+| :--- | :--- | :--- | :--- |
+| **Peek (Get Max)** | $O(1)$ | It's always at index 0. |
+| **Insert** | $O(\log n)$ | You climb the height of the tree. |
+| **Delete (Extract)** | $O(\log n)$ | You sink down the height of the tree. | 
+| **Build Heap** | $O(n)$ | Magic! (Using bottom-up approach). | 
+| **Search** | $O(n)$ | It is NOT a Search Tree. Use BST for searching. | 
 
+**My Take:** Don't confuse Heap with BST.
+* BST is for **Searching** ($Left < Root < Right$).
+* Heap is for **Priority** ($Parent > Children$). Left/Right relationship doesn't matter in Heap.
