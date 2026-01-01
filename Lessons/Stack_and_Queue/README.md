@@ -1,4 +1,4 @@
-# Module 04: Stack & Queue - The Disciplined Lists
+# Stack & Queue - The Disciplined Lists
 
 ## 1. Introduction: Law and Order
 Unlike Arrays and Linked Lists which act like "free-for-all" storage, **Stacks** and **Queues** are strict disciplinarians. They enforce specific rules on how data enters and leaves.
