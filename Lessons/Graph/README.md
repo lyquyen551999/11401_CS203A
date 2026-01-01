@@ -141,6 +141,44 @@ Just like Trees have DFS/BFS, Graphs do too.
 
 ---
 
+## 8. The Showdown: Tree vs. Graph
+Now that we've seen both, let's clear up the confusion. Many students ask: *"Is a Tree just a Graph?"*
+**Answer:** Yes, but a Tree is a Graph with strict parents!
+
+### 8.1. Comparison Matrix
+
+| Feature | 🌲 Tree | 🕸️ Graph |
+| :--- | :--- | :--- |
+| **Definition** | Connected, **Acyclic** graph. | Set of Vertices & Edges. |
+| **Philosophy** | **Hierarchical** (Boss $\to$ Employee). | **Network** (Peer-to-Peer). |
+| **Root Node** | Exactly one Root. | No concept of "Root" (Start anywhere). |
+| **Loops (Cycles)**| 🚫 **Forbidden**. | ✅ **Allowed**. |
+| **Path** | Unique path between any 2 nodes. | Multiple paths (or no path) possible. |
+| **Edges** | $N$ nodes have exactly $N-1$ edges. | No limit (can be dense or sparse). |
+
+### 8.2. Implementation "Gotcha" (Crucial!)
+When coding traversal algorithms (DFS/BFS):
+* **In Tree:** You generally flow "downwards" from Parent to Child. You rarely go back up.
+* **In Graph:** Because cycles exist ($A \to B \to C \to A$), you **MUST** keep a `visited[]` array.
+    * *Without `visited[]`:* Your code will run in an infinite loop until it crashes (Stack Overflow).
+    * *With `visited[]`:* "Oh, I've been to node A already, skip it."
+
+### 8.3. When to choose what?
+
+#### ✅ Choose Tree if:
+1.  **Hierarchy is King:** File systems (Folders), HTML DOM, Organization charts.
+2.  **Fast Search Needed:** Binary Search Trees (BST) provide $O(\log n)$ lookup.
+3.  **No Loops:** You need to guarantee that data flows one way without circling back.
+
+#### ✅ Choose Graph if:
+1.  **Complex Relationships:** Social Networks (Friends), Maps (Roads), Internet (Links).
+2.  **Routing:** You need to find the shortest path (Google Maps) or alternate routes.
+3.  **Cyclic Dependencies:** Analyzing deadlocks in OS or circular references in Excel.
+
+> **My Take:** Think of a **Tree** as a "disciplined" Graph. It follows strict rules (No loops, One parent). A **Graph** is the "wild west" where anything goes.
+
+---
+
 **References**
 * **Course Material:** Lecture notes on Data Structures.
 * **AI Assistance:** Content synthesized and structured with the help of Gemini AI.
