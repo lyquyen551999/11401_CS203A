@@ -33,12 +33,12 @@ If a Node is at index `i`:
 ## 3. Core Operations (The "Bubble" Dance)
 Maintaining the Heap property involves moving nodes up or down.
 
-### 3.1. Insert ($O(log n)$) - "Bubble Up"
+### 3.1. Insert (O(log n)) - "Bubble Up"
 1. Add the new guy to the very end of the array (bottom of the tree).
 2. If he is stronger than his parent, swap them.
 3. Repeat until he finds his rightful place.
 
-### 3.2. Extract Max ($O(log n)$) - "Bubble Down"
+### 3.2. Extract Max (O(log n)) - "Bubble Down"
 1. Remove the King (Root).
 2. Move the last element (the weakest guy) to the Root (Temporary throne).
 3. He looks at his children. If a child is stronger, swap with the strongest child.
