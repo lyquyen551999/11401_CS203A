@@ -134,3 +134,13 @@ Just like Trees have DFS/BFS, Graphs do too.
 ---
 
 ## 7. Variations
+
+* **Weighted Graph:** Edges have "Cost" (e.g., Distance between cities). Matrix stores weights instead of `1`.
+* **DAG (Directed Acyclic Graph):** A directed graph with NO loops. Critical for scheduling tasks (Project Management).
+* **Complete Graph ($K_n$):** Everyone is connected to everyone.
+
+---
+
+**References**
+* **Course Material:** Lecture notes on Data Structures.
+* **AI Assistance:** Content synthesized and structured with the help of Gemini AI.
