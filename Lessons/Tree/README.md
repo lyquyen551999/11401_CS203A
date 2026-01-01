@@ -38,7 +38,7 @@ While there are many types of trees, the **Binary Search Tree** is the superstar
 
 
 
-![Binary Search Tree](./images/BST_Structure.png)
+![Binary Search Tree](./images/Binary-Search-Tree-Example.png)
 
 
 ### 3.2. C Implementation
