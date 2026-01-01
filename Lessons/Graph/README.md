@@ -1,73 +1,136 @@
-# Graph Theory: The Web of Connections 🕸️
+# Module 08: Graph - The Web of Connections
 
-## 1. The Origin: The Seven Bridges Problem 🌉
-The story begins in the city of **Königsberg**. There were 7 bridges there, and people challenged each other:
-> *"Is there a way to cross all 7 bridges, crossing each one exactly once, and return to the starting point?"*
+## 1. The Concept: Social Networks
+If Trees are hierarchical (Boss -> Employee), **Graphs** are messy networks where anyone can connect to anyone.
+* **Undirected Graph:** Think **Facebook Friends**. If A is friend with B, B is friend with A. (Mutual).
+* **Directed Graph (Digraph):** Think **Instagram/Twitter**. You (A) follow Celebrity (B), but B doesn't follow you back. (One-way).
 
-The mathematician **Euler** solved this by a simple insight: He didn't care if the bridges were curved or straight; he simply redrew them as **dots** and **connecting lines**.
-$\rightarrow$ That was the birth of **Graph Theory**!
+> **Definition:** A Graph $G = (V, E)$ is a set of **Vertices** (Nodes) connected by **Edges** (Links).
 
----
 
-## 2. Graph Anatomy 🧬
-Basically, a Graph ($G$) consists of only 2 things:
-* **Vertex/Node ($V$):** The dots. *Example: Cities, or Facebook accounts.*
-* **Edge ($E$):** The connecting lines. *Example: Roads, or friendships.*
-
-### Types of Paths (Classification):
-* **Undirected:** A 2-way street (If A is friends with B, then B is friends with A).
-* **Directed:** A 1-way street (A likes B, but B might not like A back - the arrow points one way).
-* **Weighted:** Each road has a length (km) or a toll fee. *Google Maps uses this to calculate the fastest route.*
-
-### Concept of Degree:
-This is the number of "friends" connected to a node.
-* If it is a directed graph, we split it into: **In-degree** (edges pointing in) and **Out-degree** (edges pointing out).
 
 ---
 
-## 3. Graph vs. Tree 🌳 vs 🕸️
-You have already learned about Trees, so how is a Graph different?
-
-* **Tree:** Very disciplined. No circles allowed (**no cycles**), has a strict hierarchy (parent-child), and is always connected.
-* **Graph:** Free and flexible.
-    * Can form circles (**Cycle**) (you can walk around and return to the start).
-    * Can be broken apart (**Disconnected**) (like separate islands).
+## 2. The Math: Handshaking Lemma
+Don't let the name scare you. Imagine a party.
+* Every time two people shake hands, **2 hands** are involved.
+* **Theorem:** The sum of degrees (connections) of all vertices is always **Twice** the number of edges.
+* **Fun Fact:** The number of people who shook hands an **odd** number of times must be **even**. (Try checking this at your next party!).
 
 ---
 
-## 4. Graph Representation (Most important for exams) 💾
-Computers can't "see" drawings; they need data. There are 2 main ways to store a graph. Imagine these as 2 ways to manage a phonebook:
+## 3. Representations: Matrix vs. List
+How do we store this mess in code? Two main ways:
 
-### Method 1: Adjacency Matrix - "The Grid"
-You draw a square table $V \times V$.
-* If A connects to B $\rightarrow$ Write `1` (or the weight).
-* If they don't connect $\rightarrow$ Write `0`.
+### 3.1. Adjacency Matrix (The Grid)
+A 2D Array `A[i][j]`.
+* `1` means "Yes, connected".
+* `0` means "No connection".
 
-### Method 2: Adjacency List - "The Phonebook"
-Each person simply keeps a list of the people they know.
-* **A:** connects to `{B, C}`.
-* **B:** connects to `{D}`.
+| . | A | B | C |
+|---|---|---|---|
+| **A** | 0 | 1 | 0 |
+| **B** | 1 | 0 | 1 |
+| **C** | 0 | 1 | 0 |
 
-### ⚡ Pocket Cheatsheet: Matrix vs. List
+* **Pros:** Checking connection is instant $O(1)$.
+* **Cons:** Wastes huge space $O(V^2)$ if connections are sparse.
 
-| Feature | Adjacency Matrix | Adjacency List |
-| :--- | :--- | :--- |
-| **Visualization** | Excel Spreadsheet | Phonebook |
-| **Check connection (A, B)** | Super fast $O(1)$ | Slower, must scan $O(deg(u))$ |
-| **Memory usage** | Very high $O(V^2)$ | Efficient $O(V + E)$ |
-| **When to use?** | Dense Graph (many edges) | Sparse Graph (few edges) - Used most in reality |
+### 3.2. Adjacency List (The Rolodex)
+An Array of Linked Lists. Each node keeps a list of its friends.
+* `A: [B]`
+* `B: [A, C]`
+* `C: [B]`
+
+* **Pros:** Saves space $O(V + E)$. Standard for algorithms.
+* **Cons:** Checking connection is slower (have to walk the list).
+
+
 
 ---
 
-## 5. Walking through the Graph (Graph Traversal) 🚶‍♂️
-When lost in a maze (graph), there are 2 tactics to find the way out:
+## 4. C Implementation (Adjacency Matrix)
+We will implement an Undirected Graph using the Matrix method because it's easier to visualize.
 
-### A. DFS (Depth-First Search)
-* **Tactic:** "Once you commit, you keep going." Keep going **deep** until you hit a dead end, then turn back.
-* **Tool:** Uses a **Stack** or **Recursion**.
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-### B. BFS (Breadth-First Search)
-* **Tactic:** "Oil spill" (or Ripple effect). Visit all immediate neighbors first, then expand further out.
-* **Tool:** Uses a **Queue**.
+#define MAX_VERTICES 5
 
-> **Note:** Since graphs have cycles, we must mark places as **"Visited"** to avoid walking in circles forever.
+typedef struct {
+    int adjMatrix[MAX_VERTICES][MAX_VERTICES];
+    int numVertices;
+} Graph;
+
+// 1. Initialize the Graph (All 0s)
+void init_graph(Graph* g) {
+    g->numVertices = MAX_VERTICES;
+    for (int i = 0; i < MAX_VERTICES; i++) {
+        for (int j = 0; j < MAX_VERTICES; j++) {
+            g->adjMatrix[i][j] = 0;
+        }
+    }
+}
+
+// 2. Add Edge (Undirected = Symmetric)
+void add_edge(Graph* g, int start, int end) {
+    // Connect Start -> End
+    g->adjMatrix[start][end] = 1;
+    // Connect End -> Start (Remove this line for Directed Graph)
+    g->adjMatrix[end][start] = 1; 
+}
+
+// 3. Print the Matrix
+void print_graph(Graph* g) {
+    printf("Adjacency Matrix:\n");
+    for (int i = 0; i < g->numVertices; i++) {
+        for (int j = 0; j < g->numVertices; j++) {
+            printf("%d ", g->adjMatrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    Graph g;
+    init_graph(&g);
+
+    // Creating connections: 0-1, 0-2, 1-2
+    add_edge(&g, 0, 1);
+    add_edge(&g, 0, 2);
+    add_edge(&g, 1, 2);
+
+    print_graph(&g);
+    return 0;
+}
+```
+
+---
+
+## 5. Graph Traversals
+Just like Trees have DFS/BFS, Graphs do too.
+
+| Algo | Full Name | Strategy | Data Structure |
+|---|---|---|---|
+| **BFS** | Breadth-First Search | **"The Wave":** Visit all immediate neighbors first. | **Queue** |
+| **DFS** | Depth-First Search | **"The Maze Solver":** Go as deep as possible, then backtrack. | **Stack** (or Recursion) |
+
+---
+
+## 6. Performance Analysis
+
+| Operation | Adjacency Matrix | Adjacency List | 
+|---|---|---|
+| **Space** | $O(V^2)$ (Heavy) | $O(V + E)$ (Light) | 
+| **Add Edge** | $O(1)$ | $O(1)$ | 
+| **Check Edge** | $O(1)$ | $O(degree)$ | 
+| **BFS/DFS** | $O(V^2)$ | $O(V + E)$ | 
+
+**My Takeaway:**
+   * Use **Matrix** for dense graphs (lots of edges) or small graphs.
+   * Use **List** for sparse graphs (few edges) - This is what you'll use 90% of the time in real world.
+
+---
+
+## 7. Variations
