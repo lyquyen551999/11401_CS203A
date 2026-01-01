@@ -1,4 +1,4 @@
-# Module 08: Graph - The Web of Connections
+# Graph - The Web of Connections
 
 ## 1. The Concept: Social Networks
 If Trees are hierarchical (Boss -> Employee), **Graphs** are messy networks where anyone can connect to anyone.
