@@ -1,4 +1,4 @@
-# Module 02: Array - The Foundation
+# Array - The Foundation
 
 ## 1. What is an Array?
 If RAM is a giant city, an **Array** is a row of terraced houses (nhà phố liền kề) built on a single street.
