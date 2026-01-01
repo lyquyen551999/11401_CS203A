@@ -1,4 +1,4 @@
-# Module 07: Heap - The King of Priority
+# Heap - The King of Priority
 
 ## 1. The Concept: Emergency Room Triage
 In a normal Queue (FIFO), if you arrive first, you get served first.
