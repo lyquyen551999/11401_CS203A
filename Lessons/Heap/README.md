@@ -131,3 +131,9 @@ int extract_max(MaxHeap* h) {
     return root_value;
 }
 ```
+
+---
+
+## 5. Performance Analysis
+
+
