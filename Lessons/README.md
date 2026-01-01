@@ -1,4 +1,4 @@
-# Module 01: The Fundamentals of Data Structures
+# The Fundamentals of Data Structures
 
 ## 1. What is a Data Structure?
 Simply put, a Data Structure (DS) is a specialized format for organizing, processing, and retrieving data. 
