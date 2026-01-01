@@ -1,4 +1,4 @@
-# Module 06: Tree - The Hierarchy
+# Tree - The Hierarchy
 
 ## 1. Welcome to the 2nd Dimension
 So far, we've lived in a flat world. Arrays and Linked Lists are linear lines ($1 \to 2 \to 3$).
