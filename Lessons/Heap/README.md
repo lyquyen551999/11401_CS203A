@@ -1,59 +1,133 @@
-# Lecture Summary: Data Structures - Heaps
+# Module 07: Heap - The King of Priority
 
-## 1. Definition and Core Properties
-A **Heap** is a specialized data structure defined as a **complete binary tree** that satisfies the **heap-order property**.
+## 1. The Concept: Emergency Room Triage
+In a normal Queue (FIFO), if you arrive first, you get served first.
+But in a **Heap (Priority Queue)**, it works like an Emergency Room:
+* **The Rule:** The patient with the most critical condition (Highest Value) gets the doctor **immediately**, even if they arrived last.
+* **The Structure:** It looks like a Tree, but it's packed tightly into an Array.
 
-It relies on two fundamental properties:
-* **Shape Property (Structure):**
-    * The tree must be a **complete binary tree**, meaning every level is completely filled, except possibly the last level.
-    * Nodes in the last level are filled from **left to right**.
-    * *Significance:* This structure allows the heap to be stored efficiently in an **array** without any gaps.
-* **Heap-Order Property (Ordering):**
-    * This defines the relationship between parent and child nodes to establish priority.
+> **Max-Heap:** The Boss (Largest number) is always at the Root.
+> **Min-Heap:** The Smallest number is always at the Root.
 
-## 2. Types of Heaps
-There are two main types of heaps based on the ordering rule:
 
-| Type | Rule | Root Node |
-| :--- | :--- | :--- |
-| **Max Heap** | Parent key $\ge$ Children keys | Contains the **Maximum** element |
-| **Min Heap** | Parent key $\le$ Children keys | Contains the **Minimum** element |
 
-**Note:** Heaps are primarily used to implement **Priority Queues** and for **Heap Sort algorithms**.
+[Image of Binary Heap Structure]
 
-## 3. The Concept of Priority
-In a heap, the "Order" directly translates to "Priority".
-* The **Key Value** (number, weight, time) represents the priority.
-* The **Root Node** always holds the element with the highest priority.
 
-**Real-world examples of Priority:**
-* **Emergency Room:** Triage level (High priority treated first).
-* **Operating System:** Shortest job remaining (High priority).
-* **Networking:** Packets with high QoS levels.
+---
 
-## 4. Key Operations and Algorithms
-The heap must always maintain both the **Shape** and **Order** properties. Operations usually occur at the last leaf position to preserve the shape, followed by "sifting" to fix the order.
+## 2. The "Array Trick"
+We don't use `struct Node *left, *right` here. We use simple math to find family members in a standard Array.
 
-### A. Insertion (`insert(x)`)
-1.  **Place:** Insert the new node at the **leftmost empty position** on the last level (preserves Shape).
-2.  **Sift-Up:** Compare the new node with its parent. If the order is violated (e.g., child > parent in Max Heap), **swap** them.
-3.  **Repeat:** Continue swapping upwards until the property holds or the root is reached.
-    * *Visual Example:* Inserting 200 into a Max Heap involves swapping it up from the bottom leaf to the root.
+If a Node is at index `i`:
+* **Left Child:** `2*i + 1`
+* **Right Child:** `2*i + 2`
+* **Parent:** `(i - 1) / 2`
 
-### B. Extract Root (`extract_max` or `extract_min`)
-1.  **Replace:** Remove the root and replace it with the element from the **last leaf** (preserves Shape).
-2.  **Sift-Down:** Compare the new root with its children. Swap it with the larger child (in Max Heap) or smaller child (in Min Heap) if the order is violated.
-3.  **Repeat:** Continue swapping downwards until the property holds or a leaf is reached.
-    * *Visual Example:* Extracting 200 causes 30 (the last leaf) to move to the root, which then sifts down to its correct position.
+**Why?** This makes Heaps incredibly memory-efficient (no pointers!) and cache-friendly.
 
-## 5. Time Complexity Analysis
-Heap operations are highly efficient due to the tree structure.
 
-| Operation | Time Complexity | Why? |
-| :--- | :--- | :--- |
-| **peek_root** | **O(1)** | The highest priority element is always at index 0. |
-| **insert** | **O(log n)** | Worst case involves sifting up along the height of the tree. |
-| **extract_root** | **O(log n)** | Worst case involves sifting down along the height of the tree. |
-| **heapify(i)** | **O(log n)** | Restores property at a specific node. |
-| **build_heap** | **O(n)** | Converts an entire array to a heap using Floyd’s algorithm (more efficient than n insertions). |
-| **heapsort** | **O(n log n)** | Involves *n* extract-max operations. |
+
+---
+
+## 3. Core Operations (The "Bubble" Dance)
+Maintaining the Heap property involves moving nodes up or down.
+
+### 3.1. Insert ($O(\log n)$) - "Bubble Up"
+1. Add the new guy to the very end of the array (bottom of the tree).
+2. If he is stronger than his parent, swap them.
+3. Repeat until he finds his rightful place.
+
+### 3.2. Extract Max ($O(\log n)$) - "Bubble Down"
+1. Remove the King (Root).
+2. Move the last element (the weakest guy) to the Root (Temporary throne).
+3. He looks at his children. If a child is stronger, swap with the strongest child.
+4. Repeat until he sinks to his level.
+
+
+
+---
+
+## 4. C Implementation (Max-Heap)
+Here is how we implement a Max-Heap using a static array.
+
+```c
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+typedef struct {
+    int data[MAX_SIZE];
+    int size;
+} MaxHeap;
+
+// Helper: Swap two integers
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Operation: Bubble Up (for Insert)
+void heapify_up(MaxHeap* h, int index) {
+    if (index == 0) return; // Reached root
+
+    int parent_index = (index - 1) / 2;
+
+    // If I am greater than my boss, I take his spot
+    if (h->data[index] > h->data[parent_index]) {
+        swap(&h->data[index], &h->data[parent_index]);
+        heapify_up(h, parent_index); // Continue climbing
+    }
+}
+
+// Operation: Bubble Down (for Extract Max)
+void heapify_down(MaxHeap* h, int index) {
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+    int largest = index;
+
+    // Find the strongest among: Me, Left Child, Right Child
+    if (left < h->size && h->data[left] > h->data[largest]) {
+        largest = left;
+    }
+    if (right < h->size && h->data[right] > h->data[largest]) {
+        largest = right;
+    }
+
+    // If I'm not the largest, swap and sink down
+    if (largest != index) {
+        swap(&h->data[index], &h->data[largest]);
+        heapify_down(h, largest);
+    }
+}
+
+// API: Insert
+void insert(MaxHeap* h, int value) {
+    if (h->size >= MAX_SIZE) return; // Overflow
+    
+    // 1. Add to end
+    h->data[h->size] = value;
+    int current_index = h->size;
+    h->size++;
+    
+    // 2. Fix order
+    heapify_up(h, current_index);
+}
+
+// API: Extract Max
+int extract_max(MaxHeap* h) {
+    if (h->size <= 0) return -1; // Underflow
+    
+    int root_value = h->data[0];
+    
+    // 1. Move last element to root
+    h->data[0] = h->data[h->size - 1];
+    h->size--;
+    
+    // 2. Fix order
+    heapify_down(h, 0);
+    
+    return root_value;
+}
+```
