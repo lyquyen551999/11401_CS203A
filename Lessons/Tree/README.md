@@ -1,89 +1,91 @@
-# Understanding Tree Data Structures 🌳
+# Module 06: Tree - The Hierarchy
 
-## 1. What is a Tree? Why do we need it?
+## 1. Welcome to the 2nd Dimension
+So far, we've lived in a flat world. Arrays and Linked Lists are linear lines ($1 \to 2 \to 3$).
+**The Tree** introduces a new dimension: **Hierarchy**.
 
-> **Imagine you are queuing up to buy bubble tea.** 🧋
-> That is a **Linked List** – one person standing behind another. If you want to find the last person in line, you have to walk from the very front to the very back. **Very slow!**
+* **Analogy:** Think of a **Company Org Chart**.
+    * **Root:** The CEO (No boss).
+    * **Internal Nodes:** Managers (Has a boss, has employees).
+    * **Leaves:** Interns (Has a boss, no employees).
+    * **Subtree:** A department within the company.
 
-A **Tree**, on the other hand, is like the organizational chart of a company or a family tree diagram.
-
-* **List (Linear):** Going in a straight line (1 dimension).
-* **Tree (Hierarchical):** Ranked levels (branching from 1 to many).
-
-**Why do we need trees? To search faster!**
-Instead of asking every single person in the long queue, you just need to ask the "Boss". The Boss points to the "Manager", and the Manager points to the "Staff". The speed is multiplied many times over.
-
-![Family Tree Diagram](image_0677fa.jpg)
-*Comparison: Linear Linked List vs. Hierarchical Family Tree.*
+> **The Shift:** In a Linked List, a node knows its "Next" neighbor. In a Tree, a node knows its "Children".
 
 ---
 
-## 2. Anatomy of a "Tree" (Terminology)
+## 2. Terminology & Anatomy
+Understanding the vocab is half the battle.
 
-In Computer Science, trees grow... **upside down** (The Root is up in the sky, the leaves are down on the ground). These are the keywords you absolutely must remember:
-
-* **Root:** The biggest node, sitting at the very top (The great-ancestor).
-* **Node:** Any member within the tree.
-* **Parent / Child:** The node above that "gives birth" to the node below.
-* **Leaf:** The nodes sitting at the very bottom that have no children (Lonely nodes).
-* **Sibling:** Nodes that share the same parent (Brothers and sisters).
-* **Height / Depth:** Measured from the root down to the bottom to see how many "levels" deep the tree is.
-
----
-
-## 3. The Extended Tree Family (Types of Trees)
-
-Not all trees are the same. We classify them as follows:
-
-### A. General Tree
-A parent can have as many children as they want (like a big family).
-
-### B. Binary Tree (The most important one)
-**The Iron Rule:** Each parent can only have a **maximum of 2 children** (Left Child and Right Child).
-
-### C. Binary Search Tree (BST) ⭐
-This is the "star" of the lesson. It is a Binary Tree but with a special sorting rule:
-1.  Numbers **SMALLER** than the Parent $\rightarrow$ Stand on the **LEFT**.
-2.  Numbers **LARGER** than the Parent $\rightarrow$ Stand on the **RIGHT**.
-
-> **Purpose:** Helps search super fast (like a number guessing game where you eliminate half the possibilities after every guess).
+* **Node:** The individual entity (contains Data + Pointers).
+* **Edge:** The link connecting two nodes.
+* **Root:** The top-most node (Entry point).
+* **Leaf:** A node with no children (The end of the line).
+* **Height:** The length of the longest path from Root to a Leaf.
+* **Depth:** The distance from the Root to the current node.
 
 ---
 
-## 4. The Nightmare called "Imbalance" (Balancing)
+## 3. The Binary Search Tree (BST)
+While there are many types of trees, the **Binary Search Tree** is the superstar of this course.
 
-This is the trickiest problem. Imagine you insert numbers into a BST in this order: `1, 2, 3, 4, 5`.
+### 3.1. The Golden Rules
+1.  **Binary:** Each node has at most **2 children** (Left & Right).
+2.  **Ordered:**
+    * **Left Child** < Parent
+    * **Right Child** > Parent
+    * No duplicate values (usually).
 
-According to the rule (larger goes right), the tree will lean entirely to the right side.
-$\rightarrow$ It turns into a long, straight line (just like a Linked List).
 
-* **Consequence:** Searching becomes very slow (Time complexity: $O(n)$).
-* **Solution:** "Self-balancing" tree types like the **AVL Tree** or **Red-Black Tree**.
 
-When the tree gets skewed (leaning), they automatically "rotate" themselves to become round, short, and wide again. The shorter the tree, the faster the search (Time complexity: $O(\log n)$).
+[Image of Binary Search Tree Structure]
 
-![BST Rule and Balanced vs Skewed Tree](img_tree.png)
-*Illustration: The BST sorting rule (Left) and the difference between a slow Skewed Tree and a fast Balanced Tree (Right).*
+
+### 3.2. C Implementation
+Here is how we build a BST node and insert data recursively.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+// Create a new node
+Node* create_node(int value) {
+    Node* new_node = (Node*) malloc(sizeof(Node));
+    new_node->data = value;
+    new_node->left = NULL;
+    new_node->right = NULL;
+    return new_node;
+}
+
+// Insert logic (Recursive)
+Node* insert(Node* root, int value) {
+    // 1. Base Case: If tree is empty, new node becomes root
+    if (root == NULL) {
+        return create_node(value);
+    }
+    
+    // 2. Recursive Step: Go Left or Right?
+    if (value < root->data) {
+        root->left = insert(root->left, value);
+    } else if (value > root->data) {
+        root->right = insert(root->right, value);
+    }
+    // If value == root->data, do nothing (no duplicates)
+    
+    return root;
+}
+```
 
 ---
 
-## 5. A Walk in the Forest (Tree Traversal)
+## 4. Tree Traversals (Walking the Tree)
+Unlike an array where you iterate `0` to `n`, there are multiple ways to visit every node in a tree.
 
-How do we do a roll-call (traverse) of every single node in the tree? There are 2 main strategies:
-
-### A. Breadth-First Search (BFS - Going wide)
-* Scan **level by level**.
-* Finish level 1 (Root) $\rightarrow$ finish level 2 $\rightarrow$ finish level 3.
-* *Note:* Uses a **Queue** to remember where it is.
-
-### B. Depth-First Search (DFS - Going deep)
-Whenever it sees a path, it dives deep to the bottom first, and only turns back when it hits a dead end. There are 3 ways to do this (based on when you visit the *Parent* node):
-
-1.  **Pre-order:** Visit **Parent** first $\rightarrow$ Left $\rightarrow$ Right. (Used for copying trees).
-2.  **In-order:** Left $\rightarrow$ **Parent** $\rightarrow$ Right. (Very cool: This will print out the list of numbers sorted in *ascending order*).
-3.  **Post-order:** Left $\rightarrow$ Right $\rightarrow$ **Parent** last. (Used for deleting trees; you must delete the children before you can delete the parent).
-
----
-
-### 📝 Summary
-> "Trees help switch data from a vertical line into branches for faster searching, but you must remember to keep the tree **balanced** (not skewed) and remember the rule: **Big-Right, Small-Left**."
+### 4.1. Depth-First Search (DFS)
+We dive deep before we go wide. Used heavily in recursion.
