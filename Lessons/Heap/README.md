@@ -137,7 +137,7 @@ int extract_max(MaxHeap* h) {
 ## 5. Performance Analysis
 
 | Operation | Time Complexity | Why? |
-| :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- | 
 | **Peek (Get Max)** | $O(1)$ | It's always at index 0. |
 | **Insert** | $O(\log n)$ | You climb the height of the tree. |
 | **Delete (Extract)** | $O(\log n)$ | You sink down the height of the tree. | 
