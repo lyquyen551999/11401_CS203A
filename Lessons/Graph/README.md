@@ -143,6 +143,7 @@ Just like Trees have DFS/BFS, Graphs do too.
 
 ## 8. The Showdown: Tree vs. Graph
 Now that we've seen both, let's clear up the confusion. Many students ask: *"Is a Tree just a Graph?"*
+
 **Answer:** Yes, but a Tree is a Graph with strict parents!
 
 ### 8.1. Comparison Matrix
