@@ -110,3 +110,47 @@ void inorder_traversal(Node* root) {
 ```
 
 **My Take:** Notice how short the code is? That's the power of recursion. If you tried to do this with loops (iteratively), you'd need a Stack and 20+ lines of code!
+
+---
+
+## 5. Performance & Complexity
+
+### 5.1. The "Balance" Problem
+
+The shape of the tree determines its speed.
+
+* **Best Case (Balanced):** The tree looks like a pyramid. Height is $\log n$.
+* **Worst Case (Skewed):** The tree looks like a linked list (everything inserted in sorted order). Height is $n$.
+
+| Operation | Balanced BST | Unbalanced (Skewed) 
+| :--- | :--- | :--- |
+| **Search** | $O(\log n)$ | $O(\log n)$ |
+| **Insert** | $O(\log n)$ | $O(\log n)$ |
+| **Delete** | $O(\log n)$ | $O(\log n)$ |
+
+### 5.2. Space Complexity
+
+* **Storage:** $O(n)$ (One node per element).
+
+* **Recursion Stack:** $O(h)$ where $h$ is height.
+
+---
+
+## 6. Tree Variations (The Ecosystem)
+
+Trees are a big family. Here are some cousins you should know:
+
+* **AVL Tree / Red-Black Tree:** Self-balancing BSTs. They automatically rotate nodes to prevent the "Skewed" worst case. (Used in C++ `std::map`).
+
+* **Heap (Priority Queue):** A tree where the parent is always greater (Max-Heap) or smaller (Min-Heap) than children. Great for finding the "Top 1".
+
+* **Trie (Prefix Tree):** Used for autocomplete (storing dictionaries).
+
+* **B-Tree:** Optimized for Databases and File Systems (minimizing disk reads).
+
+---
+
+**References**
+* **Course Material:** Lecture notes on Data Structures.
+* **AI Assistance:** Content synthesized and structured with the help of Gemini AI.
+
