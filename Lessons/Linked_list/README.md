@@ -1,4 +1,4 @@
-# Module 03: Linked List - The Chain
+# Linked List - The Chain
 
 ## 1. Concept: The Scavenger Hunt
 Remember how Arrays are like houses on a single street? Well, a **Linked List** is like a **Scavenger Hunt** (Trò chơi truy tìm kho báu).
