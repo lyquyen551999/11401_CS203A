@@ -89,3 +89,24 @@ Unlike an array where you iterate `0` to `n`, there are multiple ways to visit e
 
 ### 4.1. Depth-First Search (DFS)
 We dive deep before we go wide. Used heavily in recursion.
+
+| Type | Order | Mnemonic | Use Case |
+| :--- | :--- | :--- | :--- |
+| **Pre-order** | Root $\to$ Left $\to$ Right | "Me First" | Copying a tree structure. |
+| **In-order** | Left $\to$ Root $\to$ Right | "Bottom Up" | **Getting sorted data** from a BST. |
+| **Post-order** | Left $\to$ Right $\to$ Root | "Me Last" | Deleting a tree (Free children first). |
+
+### 4.2. Code: The Magic of Recursion
+
+```c
+// In-order Traversal: Left -> Root -> Right
+void inorder_traversal(Node* root) {
+    if (root == NULL) return; // Base case
+    
+    inorder_traversal(root->left);  // 1. Go Left
+    printf("%d ", root->data);      // 2. Visit Root
+    inorder_traversal(root->right); // 3. Go Right
+}
+```
+
+**My Take:** Notice how short the code is? That's the power of recursion. If you tried to do this with loops (iteratively), you'd need a Stack and 20+ lines of code!
