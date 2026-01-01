@@ -1,4 +1,4 @@
-# Module 05: Hash Table - The Magic Map
+# Hash Table - The Magic Map
 
 ## 1. The Concept: Valet Parking
 Imagine a massive parking lot.
