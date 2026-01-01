@@ -11,7 +11,7 @@ But in a **Heap (Priority Queue)**, it works like an Emergency Room:
 
 
 
-[Image of Binary Heap Structure]
+![Binary Heap Structure](./images/MinHeapAndMaxHeap.png)
 
 
 ---
